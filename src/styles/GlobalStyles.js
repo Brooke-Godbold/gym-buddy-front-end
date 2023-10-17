@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, css } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
 :root {
@@ -68,31 +68,19 @@ const GlobalStyles = createGlobalStyle`
 html {
   font-size: 62.5%;
   height: 100%;
+
+  overflow: hidden;
 }
 
 body {
   font-family: "Nunito", sans-serif;
   color: var(--color-brand-700);
+  background-color: var(--color-grey-200);
   transition: color 0.3s, background-color 0.3s;
-  min-height: 100vh;
   line-height: 1.5;
   font-size: 1.6rem;
-  height: 100%;
 
-  &::-webkit-scrollbar {
-    width: 18px; /* width of the entire scrollbar */
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--color-brand-600); /* color of the scroll thumb */
-    border: 3px solid var(--color-brand-600); /* creates padding around scroll thumb */
-  }
-  &::-webkit-scrollbar-thumb:hover {
-    background-color: var(--color-brand-400); /* color of the scroll thumb */
-    border: 3px solid var(--color-brand-400); /* creates padding around scroll thumb */
-  }
-
-  scrollbar-color: var(--color-brand-600) transparent;
-  scroll-padding: 3px;
+  overflow: hidden;
 }
 
 input,
@@ -160,4 +148,78 @@ select {
 }
 `;
 
+const BasePage = css`
+  margin: 0 auto;
+  width: 50%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4.8rem;
+
+  flex: auto;
+
+  @media (max-width: 160em) {
+    width: 75%;
+  }
+
+  @media (max-width: 120em) {
+    width: 90%;
+  }
+`;
+
+const BaseItem = css`
+  background-color: var(--color-grey-100);
+  border-radius: var(--border-radius-sm);
+
+  border-top: solid 4px var(--color-brand-200);
+
+  transition: all 0.3s;
+
+  &:hover {
+    transform: scale(102%);
+  }
+`;
+
+const CommonScrollbar = css`
+  &::-webkit-scrollbar {
+    width: 10px; /* width of the entire scrollbar */
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-brand-600); /* color of the scroll thumb */
+    border: 3px solid var(--color-brand-600); /* creates padding around scroll thumb */
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-brand-400); /* color of the scroll thumb */
+    border: 3px solid var(--color-brand-400); /* creates padding around scroll thumb */
+  }
+
+  scrollbar-color: var(--color-brand-600) transparent;
+  scroll-padding: 3px;
+`;
+
+const CommonButton = css`
+  padding: 0 1.2rem;
+
+  background-color: var(--color-brand-200);
+
+  font-weight: 700;
+
+  border: none;
+  box-shadow: var(--shadow-md);
+  border-radius: var(--border-radius-md);
+
+  transition: all 0.3s;
+
+  &:hover {
+    transform: scale(105%);
+    box-shadow: var(--shadow-lg);
+  }
+
+  &:active {
+    transform: scale(110%);
+  }
+`;
+
 export default GlobalStyles;
+
+export { BasePage, BaseItem, CommonScrollbar, CommonButton };
