@@ -24,6 +24,14 @@ const StyledListContainer = styled.div`
     display: flex;
     flex-direction: column;
   }
+
+  @media (max-width: 30em) {
+    padding: 1.2rem 0;
+  }
 `;
 
-export { StyledListContainer };
+const NoItemsHeading = styled.h3`
+  text-align: center;
+`;
+
+export { StyledListContainer, NoItemsHeading };

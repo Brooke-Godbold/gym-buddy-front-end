@@ -1,23 +1,47 @@
-import { BsHandThumbsUpFill } from 'react-icons/bs';
+import PropTypes from 'prop-types';
+
+import { BsHandThumbsUp, BsHandThumbsUpFill } from 'react-icons/bs';
 
 import {
   StyledUsefulnessSelection,
   UsefulnessSelect,
+  UsefulnessText,
   UserCount,
 } from './UsefulnessSelection.styles';
 
-//BsHandThumbsUp
-
-function UsefulnessSelection() {
+function UsefulnessSelection({
+  votes,
+  voteAction,
+  canVote,
+  active,
+  userOwned,
+}) {
   return (
     <StyledUsefulnessSelection>
-      <p>You found this useful</p>
-      <UsefulnessSelect>
-        <BsHandThumbsUpFill />
-      </UsefulnessSelect>
-      <UserCount>15 users found this useful</UserCount>
+      {!userOwned && (
+        <>
+          <UsefulnessText>
+            {active ? 'You found this useful' : 'Did you find this useful?'}
+          </UsefulnessText>
+          <UsefulnessSelect disabled={!canVote} onClick={voteAction}>
+            {active ? <BsHandThumbsUpFill /> : <BsHandThumbsUp />}
+          </UsefulnessSelect>
+        </>
+      )}
+
+      {votes?.length > 0 && (
+        <UserCount>{`${votes.length} users found this useful`}</UserCount>
+      )}
     </StyledUsefulnessSelection>
   );
 }
+
+UsefulnessSelection.propTypes = {
+  votes: PropTypes.array.isRequired,
+  voteAction: PropTypes.func.isRequired,
+  canVote: PropTypes.bool.isRequired,
+  active: PropTypes.bool.isRequired,
+  userOwned: PropTypes.bool.isRequired,
+};
 
 export default UsefulnessSelection;

@@ -15,8 +15,6 @@ const Main = styled.div`
     width: 18px; /* width of the entire scrollbar */
   }
 
-  margin-top: 1.4rem;
-
   overflow-y: scroll;
 
   flex: auto;

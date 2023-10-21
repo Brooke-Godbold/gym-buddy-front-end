@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { BaseItem } from '../../../styles/GlobalStyles';
+import { NavLink } from 'react-router-dom';
 
-const StyledGymDetails = styled.div`
+const StyledGymDetails = styled(NavLink)`
   ${BaseItem}
 
   width: 100%;
@@ -10,15 +11,38 @@ const StyledGymDetails = styled.div`
   box-shadow: var(--shadow-md);
 
   display: grid;
-  grid-template-columns: max-content auto;
+  grid-template-columns: fit-content(25%) auto;
   column-gap: 6.4rem;
 
-  min-height: 40rem;
+  min-width: 75rem;
+  min-height: 30rem;
+
+  max-height: 40rem;
+  cursor: ${(props) => (props.$nav ? 'pointer' : 'auto')};
+
+  & div {
+    pointer-events: none;
+  }
+
+  @media (max-width: 80em) {
+    width: 100%;
+    min-width: auto;
+  }
+
+  @media (max-width: 40em) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 40em) {
+    padding: 1.2rem;
+  }
 `;
 
 const GymDetailsImageContainer = styled.div`
-  max-height: 40rem;
-  max-width: 40rem;
+  aspect-ratio: 1 / 1;
+  max-height: 90%;
+  max-width: auto;
 
   align-self: center;
 
@@ -33,6 +57,10 @@ const GymDetailsImageContainer = styled.div`
   @media (max-width: 65em) {
     max-height: 20rem;
     max-width: 20rem;
+  }
+
+  @media (max-width: 40em) {
+    display: none;
   }
 `;
 
@@ -57,6 +85,18 @@ const AddressBlock = styled.div`
 
   display: flex;
   flex-direction: column;
+
+  & p {
+    @media (max-width: 30em) {
+      font-size: 1.2rem;
+    }
+  }
+`;
+
+const GymName = styled.h1`
+  @media (max-width: 30em) {
+    font-size: 2.4rem;
+  }
 `;
 
 export {
@@ -65,4 +105,5 @@ export {
   GymDetailsImage,
   DetailsBlock,
   AddressBlock,
+  GymName,
 };

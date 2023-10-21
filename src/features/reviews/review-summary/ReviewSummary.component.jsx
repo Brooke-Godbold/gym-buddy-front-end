@@ -1,55 +1,70 @@
 import PropTypes from 'prop-types';
 
+import { useIsAuthenticated } from '../../../query/auth/useIsAuthenticated';
+import { useGetAuthenticatedUser } from '../../../query/user/useGetAuthenticatedUser';
+import { useVoteReview } from '../../../query/gym/useVoteReview';
+
 import Modal from '../../../ui/modal/Modal.component';
 import ReviewDetails from '../review-details/ReviewDetails.component';
+import UsefulnessSelection from '../../../ui/usefulness-selection/UsefulnessSelection.component';
+import RatingBar from '../../../ui/rating-bar/RatingBar.component';
 
 import {
+  ReviewSummaryButton,
   ReviewSummaryContent,
   ReviewSummaryHeading,
+  ReviewUsefulnessContainer,
   StyledReviewSummary,
 } from './ReviewSummary.styles';
-import UsefulnessSelection from '../../../ui/usefulness-selection/UsefulnessSelection.component';
 
-function ReviewSummary() {
-  return (
-    <Modal>
-      <Modal.Open opens="review">
-        <ReviewSummaryDetails />
-      </Modal.Open>
-      <Modal.Window name="review">
-        <ReviewDetails />
-      </Modal.Window>
-    </Modal>
-  );
-}
+function ReviewSummary({ review }) {
+  const { authData } = useIsAuthenticated();
+  const { userData } = useGetAuthenticatedUser(authData?.isAuthenticated);
+  const { isVotingReview, voteReview } = useVoteReview();
 
-function ReviewSummaryDetails({ onClick }) {
+  function handleVoteReview() {
+    const data = {
+      reviewId: review.reviewId,
+      voteData: {
+        userId: userData?.userId,
+      },
+    };
+
+    voteReview(data);
+  }
+
   return (
-    <StyledReviewSummary onClick={onClick}>
-      <ReviewSummaryHeading>Review Heading</ReviewSummaryHeading>
-      <UsefulnessSelection />
-      <ReviewSummaryContent>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi maiores
-        suscipit quasi quidem deserunt. Ut modi laboriosam cupiditate odit,
-        facilis fugiat minima delectus error voluptatum, doloremque repellendus,
-        saepe corrupti reprehenderit? Lorem ipsum dolor sit amet consectetur,
-        adipisicing elit. Animi maiores suscipit quasi quidem deserunt. Ut modi
-        laboriosam cupiditate odit, facilis fugiat minima delectus error
-        voluptatum, doloremque repellendus, saepe corrupti reprehenderit? Lorem
-        ipsum dolor sit amet consectetur, adipisicing elit. Animi maiores
-        suscipit quasi quidem deserunt. Ut modi laboriosam cupiditate odit,
-        facilis fugiat minima delectus error voluptatum, doloremque repellendus,
-        saepe corrupti reprehenderit? Lorem ipsum dolor sit, amet consectetur
-        adipisicing elit. Aperiam rem et facere molestiae distinctio reiciendis
-        ab magnam, repellendus porro esse suscipit alias enim incidunt dolorum
-        ratione aspernatur ipsum. Tempora, culpa!
-      </ReviewSummaryContent>
+    <StyledReviewSummary $ownedReview={review.userId === userData?.userId}>
+      <ReviewSummaryHeading>{review.summary}</ReviewSummaryHeading>
+      <RatingBar canEdit={false} avgRating={review.rating} />
+      <ReviewSummaryContent>{review.content}</ReviewSummaryContent>
+      <div>
+        <Modal>
+          <Modal.Open opens="review">
+            <ReviewSummaryButton>View More</ReviewSummaryButton>
+          </Modal.Open>
+          <Modal.Window name="review">
+            <ReviewDetails review={review} />
+          </Modal.Window>
+        </Modal>
+      </div>
+      {authData?.isAuthenticated && (
+        <ReviewUsefulnessContainer>
+          <UsefulnessSelection
+            votes={review.votes}
+            voteAction={handleVoteReview}
+            canVote={!isVotingReview}
+            active={review.votes.includes(Number(userData?.userId))}
+            userOwned={userData?.userId == review.userId}
+          />
+        </ReviewUsefulnessContainer>
+      )}
     </StyledReviewSummary>
   );
 }
 
-ReviewSummaryDetails.propTypes = {
-  onClick: PropTypes.func,
+ReviewSummary.propTypes = {
+  review: PropTypes.object.isRequired,
 };
 
 export default ReviewSummary;

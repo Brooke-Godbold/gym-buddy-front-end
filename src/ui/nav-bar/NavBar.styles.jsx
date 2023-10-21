@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { CommonButton } from '../../styles/GlobalStyles';
 import { NavLink } from 'react-router-dom';
 
 const StyledNavBar = styled.div`
   width: 100%;
 
-  padding: 1.2rem 4.8rem;
+  padding: 2.4rem 4.8rem;
 
   display: flex;
   justify-content: space-between;
@@ -13,10 +13,16 @@ const StyledNavBar = styled.div`
   background-color: var(--color-grey-200);
   box-shadow: var(--shadow-lg);
 
+  position: relative;
+
   z-index: 990;
+
+  @media (max-width: 45em) {
+    padding: 2.4rem;
+  }
 `;
 
-const HomeButton = styled(NavLink)`
+const MainNavButton = css`
   border: none;
   background: transparent;
 
@@ -40,6 +46,24 @@ const HomeButton = styled(NavLink)`
   }
 `;
 
+const HomeButton = styled(NavLink)`
+  ${MainNavButton}
+
+  @media (max-width: 45em) {
+    display: none;
+  }
+`;
+
+const NavBarMobileMenuButton = styled.button`
+  ${MainNavButton}
+
+  display: none;
+
+  @media (max-width: 45em) {
+    display: block;
+  }
+`;
+
 const SearchBarContainer = styled.form`
   width: 25%;
   height: 4.8rem;
@@ -55,6 +79,14 @@ const SearchBarContainer = styled.form`
 
     pointer-events: none;
   }
+
+  @media (max-width: 120em) {
+    width: 50%;
+  }
+
+  @media (max-width: 45em) {
+    width: 75%;
+  }
 `;
 
 const SearchBar = styled.input`
@@ -69,8 +101,44 @@ const SearchBar = styled.input`
   border-radius: 25px;
 `;
 
-const LoginButton = styled.button`
+const LoginButton = styled.a`
   ${CommonButton}
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 5.2rem;
+  min-height: 5.2rem;
 `;
 
-export { StyledNavBar, SearchBar, SearchBarContainer, LoginButton, HomeButton };
+const NavBarButton = styled.button`
+  ${CommonButton}
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 5.2rem;
+  min-height: 5.2rem;
+`;
+
+const NavBarButtonsContainer = styled.div`
+  display: flex;
+  gap: 1.2rem;
+
+  @media (max-width: 45em) {
+    display: none;
+  }
+`;
+
+export {
+  StyledNavBar,
+  SearchBar,
+  SearchBarContainer,
+  LoginButton,
+  HomeButton,
+  NavBarButton,
+  NavBarButtonsContainer,
+  NavBarMobileMenuButton,
+};

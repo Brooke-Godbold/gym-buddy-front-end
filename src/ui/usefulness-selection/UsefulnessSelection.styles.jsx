@@ -5,9 +5,15 @@ const StyledUsefulnessSelection = styled.div`
   display: grid;
   grid-template-columns: repeat(2, max-content);
   column-gap: 1.8rem;
-  row-gap: 1.2rem;
+  row-gap: 0.5rem;
 
   font-size: 1.8rem;
+`;
+
+const UsefulnessText = styled.p`
+  @media (max-width: 80em) {
+    font-size: 1.4rem;
+  }
 `;
 
 const UserCount = styled.p`
@@ -36,7 +42,16 @@ const UsefulnessSelect = styled.button`
 
   & svg {
     transform: scale(125%);
+
+    @media (max-width: 80em) {
+      transform: scale(110%);
+    }
   }
 `;
 
-export { StyledUsefulnessSelection, UserCount, UsefulnessSelect };
+export {
+  StyledUsefulnessSelection,
+  UserCount,
+  UsefulnessSelect,
+  UsefulnessText,
+};
