@@ -10,7 +10,7 @@ function PageErrorContainer({ error }) {
   return (
     <StyledPageErrorContainer>
       <PageErrorHeading>{error.heading}</PageErrorHeading>
-      <PageErrorText>{error.text}</PageErrorText>
+      <PageErrorText id="page-error-text">{error.text}</PageErrorText>
     </StyledPageErrorContainer>
   );
 }

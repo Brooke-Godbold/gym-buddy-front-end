@@ -27,10 +27,13 @@ function SearchSection() {
       <SearchHeading>Search Gyms</SearchHeading>
       <SearchBarSubContainer>
         <MainSearchBar
+          id="main-search-input"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <SearchButton onClick={handleOnSearch}>Search</SearchButton>
+        <SearchButton id="main-search-button" onClick={handleOnSearch}>
+          Search
+        </SearchButton>
       </SearchBarSubContainer>
     </StyledSearchSection>
   );

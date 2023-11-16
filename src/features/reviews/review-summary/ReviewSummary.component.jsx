@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 
-import { useIsAuthenticated } from '../../../query/auth/useIsAuthenticated';
 import { useGetAuthenticatedUser } from '../../../query/user/useGetAuthenticatedUser';
 import { useVoteReview } from '../../../query/gym/useVoteReview';
 
@@ -18,8 +17,7 @@ import {
 } from './ReviewSummary.styles';
 
 function ReviewSummary({ review }) {
-  const { authData } = useIsAuthenticated();
-  const { userData } = useGetAuthenticatedUser(authData?.isAuthenticated);
+  const { userData } = useGetAuthenticatedUser();
   const { isVotingReview, voteReview } = useVoteReview();
 
   function handleVoteReview() {
@@ -48,17 +46,15 @@ function ReviewSummary({ review }) {
           </Modal.Window>
         </Modal>
       </div>
-      {authData?.isAuthenticated && (
-        <ReviewUsefulnessContainer>
-          <UsefulnessSelection
-            votes={review.votes}
-            voteAction={handleVoteReview}
-            canVote={!isVotingReview}
-            active={review.votes.includes(Number(userData?.userId))}
-            userOwned={userData?.userId == review.userId}
-          />
-        </ReviewUsefulnessContainer>
-      )}
+      <ReviewUsefulnessContainer>
+        <UsefulnessSelection
+          votes={review.votes}
+          voteAction={handleVoteReview}
+          canVote={!isVotingReview}
+          active={review.votes.includes(Number(userData?.userId))}
+          userOwned={userData?.userId == review.userId}
+        />
+      </ReviewUsefulnessContainer>
     </StyledReviewSummary>
   );
 }

@@ -20,7 +20,7 @@ import {
 
 function EquipmentSummary({ equipment }) {
   const { authData } = useIsAuthenticated();
-  const { userData } = useGetAuthenticatedUser(authData?.isAuthenticated);
+  const { userData } = useGetAuthenticatedUser();
   const { isVotingEquipment, voteEquipment } = useVoteEquipment();
   const { isRatingEquipment, rateEquipment } = useRateEquipment();
 
@@ -98,17 +98,15 @@ function EquipmentSummary({ equipment }) {
           />
         </EquipmentSummaryQualityContainer>
       )}
-      {authData?.isAuthenticated && (
-        <EquipmentUsefulnessContainer>
-          <UsefulnessSelection
-            votes={equipment.accuracy.filter((vote) => vote.isCorrect)}
-            voteAction={handleVoteEquipment}
-            canVote={!isVotingEquipment}
-            active={userVote()?.isCorrect || false}
-            userOwned={userData?.userId == equipment.userId}
-          />
-        </EquipmentUsefulnessContainer>
-      )}
+      <EquipmentUsefulnessContainer>
+        <UsefulnessSelection
+          votes={equipment.accuracy.filter((vote) => vote.isCorrect)}
+          voteAction={handleVoteEquipment}
+          canVote={!isVotingEquipment}
+          active={userVote()?.isCorrect || false}
+          userOwned={userData?.userId == equipment.userId}
+        />
+      </EquipmentUsefulnessContainer>
     </StyledEquipmentSummary>
   );
 }

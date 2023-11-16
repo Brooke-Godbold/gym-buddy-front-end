@@ -8,7 +8,8 @@ async function getAuthenticatedUser() {
     );
     return response;
   } catch (err) {
-    throw new Error(err.message);
+    if (err.response.status !== 401 && err.response.status !== 403)
+      throw new Error(err.message);
   }
 }
 

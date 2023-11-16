@@ -4,7 +4,9 @@ import { StyledListContainer } from './ListContainer.styles';
 
 function ListContainer({ children, columns = 2 }) {
   return (
-    <StyledListContainer $columns={columns}>{children}</StyledListContainer>
+    <StyledListContainer id="list-container" $columns={columns}>
+      {children}
+    </StyledListContainer>
   );
 }
 

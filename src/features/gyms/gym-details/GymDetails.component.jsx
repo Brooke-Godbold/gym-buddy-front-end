@@ -18,6 +18,7 @@ function GymDetails({ gymData }) {
 
   return (
     <StyledGymDetails
+      id="gym-details-container"
       $nav={location.pathname.includes('search')}
       to={location.pathname.includes('search') && `/gym/${gymData.gymId}`}
     >
@@ -25,14 +26,16 @@ function GymDetails({ gymData }) {
         <GymDetailsImage src="https://hips.hearstapps.com/hmg-prod/images/best-luxury-gyms-london-1577449934.jpg?crop=0.6666666666666666xw:1xh;center,top&resize=1200:*" />
       </GymDetailsImageContainer>
       <DetailsBlock>
-        <GymName>{gymData.name}</GymName>
+        <GymName id="gym-name">{gymData.name}</GymName>
         <RatingBar canEdit={false} avgRating={gymData.avgRating} />
         <AddressBlock>
-          <p>{gymData.address.line1}</p>
-          {gymData.address.line2 && <p>{gymData.address.line2}</p>}
-          <p>{gymData.address.city}</p>
-          <p>{gymData.address.county}</p>
-          <p>{gymData.address.postcode}</p>
+          <p id="gym-address-line-1">{gymData.address.line1}</p>
+          {gymData.address.line2 && (
+            <p id="gym-address-line-2">{gymData.address.line2}</p>
+          )}
+          <p id="gym-address-city">{gymData.address.city}</p>
+          <p id="gym-address-county">{gymData.address.county}</p>
+          <p id="gym-address-postcode">{gymData.address.postcode}</p>
         </AddressBlock>
       </DetailsBlock>
     </StyledGymDetails>

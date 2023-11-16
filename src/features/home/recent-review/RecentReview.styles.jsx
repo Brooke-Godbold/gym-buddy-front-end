@@ -43,6 +43,14 @@ const RecentReviewContent = styled.p`
   text-align: start;
 
   pointer-events: none;
+
+  margin-bottom: 5.4rem;
+`;
+
+const RecentReviewLinkContainer = styled.div`
+  position: absolute;
+  bottom: 2.4rem;
+  left: 2.4rem;
 `;
 
 const RecentReviewLink = styled(NavLink)`
@@ -57,5 +65,6 @@ export {
   StyledRecentReview,
   RecentReviewHeading,
   RecentReviewContent,
+  RecentReviewLinkContainer,
   RecentReviewLink,
 };

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import UsefulnessSelection from '../../../ui/usefulness-selection/UsefulnessSelection.component';
 import RatingBar from '../../../ui/rating-bar/RatingBar.component';
 
-import { useIsAuthenticated } from '../../../query/auth/useIsAuthenticated';
 import { useGetAuthenticatedUser } from '../../../query/user/useGetAuthenticatedUser';
 import { useVoteReview } from '../../../query/gym/useVoteReview';
 
@@ -15,8 +14,7 @@ import {
 } from './ReviewDetails.styles';
 
 function ReviewDetails({ review }) {
-  const { authData } = useIsAuthenticated();
-  const { userData } = useGetAuthenticatedUser(authData?.isAuthenticated);
+  const { userData } = useGetAuthenticatedUser();
   const { isVotingReview, voteReview } = useVoteReview();
 
   function handleVoteReview() {
@@ -36,17 +34,15 @@ function ReviewDetails({ review }) {
       <RatingBar canEdit={false} avgRating={review.rating} />
       <ReviewDetailsContent>{review.content}</ReviewDetailsContent>
       {review.userId === userData?.userId && <div></div>}
-      {authData?.isAuthenticated && (
-        <ReviewUsefulnessContainer>
-          <UsefulnessSelection
-            votes={review.votes}
-            voteAction={handleVoteReview}
-            canVote={!isVotingReview}
-            active={review.votes.includes(Number(userData?.userId))}
-            userOwned={userData?.userId == review.userId}
-          />
-        </ReviewUsefulnessContainer>
-      )}
+      <ReviewUsefulnessContainer>
+        <UsefulnessSelection
+          votes={review.votes}
+          voteAction={handleVoteReview}
+          canVote={!isVotingReview}
+          active={review.votes.includes(Number(userData?.userId))}
+          userOwned={userData?.userId == review.userId}
+        />
+      </ReviewUsefulnessContainer>
     </StyledReviewDetails>
   );
 }

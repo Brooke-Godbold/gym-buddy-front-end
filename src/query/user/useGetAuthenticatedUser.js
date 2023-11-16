@@ -1,11 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { getAuthenticatedUser } from '../../services/apiUser';
 
-export function useGetAuthenticatedUser(authenticated) {
+import { useIsAuthenticated } from '../auth/useIsAuthenticated';
+
+export function useGetAuthenticatedUser() {
+  const { isFetchingAuth, authData } = useIsAuthenticated();
+
   const { isFetching: isFetchingUser, data: userData } = useQuery({
     queryKey: ['auth_user'],
     queryFn: async () => {
-      if (!authenticated) return null;
+      if (isFetchingAuth || !authData?.isAuthenticated) return null;
 
       const response = await getAuthenticatedUser();
       return response?.data || null;

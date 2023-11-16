@@ -3,21 +3,22 @@ import {
   RecentReviewContent,
   RecentReviewHeading,
   RecentReviewLink,
+  RecentReviewLinkContainer,
   StyledRecentReview,
 } from './RecentReview.styles';
 import RatingBar from '../../../ui/rating-bar/RatingBar.component';
 
 function RecentReview({ review }) {
   return (
-    <StyledRecentReview>
+    <StyledRecentReview id={`review-${review.reviewId}`}>
       <RecentReviewHeading>{review.summary}</RecentReviewHeading>
       <RatingBar canEdit={false} avgRating={review.rating} />
       <RecentReviewContent>{review.content}</RecentReviewContent>
-      <div>
+      <RecentReviewLinkContainer>
         <RecentReviewLink to={`/gym/${review.gymId}`}>
           View this Gym
         </RecentReviewLink>
-      </div>
+      </RecentReviewLinkContainer>
     </StyledRecentReview>
   );
 }

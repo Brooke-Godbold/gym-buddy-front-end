@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-async function getGyms(searchQuery) {
+async function getGyms(searchQuery, limit) {
+  console.log('A: ', searchQuery, limit);
   try {
     const response = await axios.get(
-      `${import.meta.env.VITE_GYM_BUDDY_API_URL}/gyms${
-        searchQuery ? `?search=${searchQuery}` : ''
-      }`
+      `${import.meta.env.VITE_GYM_BUDDY_API_URL}/gyms`,
+      { params: { search: searchQuery, limit: limit } }
     );
     return response;
   } catch (err) {
@@ -30,6 +30,17 @@ async function addGym(gymData) {
       `${import.meta.env.VITE_GYM_BUDDY_API_URL}/gyms`,
       gymData,
       { withCredentials: true }
+    );
+    return response;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+async function getReviews(limit) {
+  try {
+    const response = axios.get(
+      `${import.meta.env.VITE_GYM_BUDDY_API_URL}/gyms/reviews?limit=${limit}`
     );
     return response;
   } catch (err) {
@@ -110,6 +121,7 @@ export {
   getGyms,
   getGymById,
   addGym,
+  getReviews,
   addReview,
   voteReview,
   addEquipment,

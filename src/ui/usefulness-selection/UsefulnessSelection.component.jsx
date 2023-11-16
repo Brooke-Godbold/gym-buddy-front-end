@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 
 import { BsHandThumbsUp, BsHandThumbsUpFill } from 'react-icons/bs';
 
+import { useIsAuthenticated } from '../../query/auth/useIsAuthenticated';
+
 import {
   StyledUsefulnessSelection,
   UsefulnessSelect,
@@ -16,9 +18,11 @@ function UsefulnessSelection({
   active,
   userOwned,
 }) {
+  const { authData } = useIsAuthenticated();
+
   return (
     <StyledUsefulnessSelection>
-      {!userOwned && (
+      {!userOwned && authData?.isAuthenticated && (
         <>
           <UsefulnessText>
             {active ? 'You found this useful' : 'Did you find this useful?'}
